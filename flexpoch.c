@@ -52,7 +52,7 @@ uint32_t ns2frac(uint32_t nanoseconds) {
 }
 
 // convert fraction to ns. This only works for small fraction (e.g. 20bit)
-uint32_t frac2ns(uint binary) {
+uint32_t frac2ns(uint64_t binary) {
     uint64_t temp = (uint64_t)((binary>>1) * 119209289551 + 500000000) / 1000000000;  // 2^64 ~ 10^19. add 0.5e9 for correct rounding
     return (uint32_t)(temp);
 }
