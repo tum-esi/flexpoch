@@ -1,0 +1,165 @@
+# Project-specific first
+bin/
+obj/
+
+# -----------------------------------------------------------------------------
+# MultiLang gitignore v1 by E. Regnath. Will ignore:
+# 
+# * Local environment + config files (API keys?) and private key files
+# * Logs, caches, and database files
+# * Editor configs and temporary files
+# * Auto-generated system files only used by operating systems (Win,Mac,Lin) 
+# * Compiled and temporary files of C, Python, Node.js, etc.
+
+
+## Environments ##
+##################
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+env/
+ENV/
+env.bak/
+
+# virtual environments
+.venv
+venv/
+venv.bak/
+
+# (private) key files
+*.ssh
+*.key
+*.p8
+*.p12
+*.der
+*.ppk
+*.pem
+
+# misc 
+*.lock
+*.history
+
+
+
+## Logs, Caches & Databases ##
+##############################
+
+# logs !
+.logs/
+*.log
+
+# cache files and folders
+.cache/
+.cache
+
+# Databases
+*.db
+*.sql
+*.sqlite
+*.sqlite3
+
+
+
+## Editor/Tool Files ##
+#######################
+
+# Visual Studio Code
+.vscode/*
+.vscode-test
+
+# vim files:
+*~
+*.swp
+*.swo
+
+# IntelliJ
+.idea/
+.idea_modules/
+
+# sublime text
+*.sublime-project
+*.sublime-workspace
+
+
+
+## Temp OS files ##
+###################
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.Zone.Identifier
+
+# OS X
+.DS_Store
+.Spotlight-V100
+.Trashes
+._*
+
+# Linux
+.directory
+.Trash-*
+
+
+## Language-specific ##
+#######################
+
+## C / C++
+# ---------------------
+*.o
+*.so
+
+
+## Python
+# ---------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+
+## JS / Node.JS ##
+# ---------------------
+node_modules/
+jspm_packages/
+
+# cache files
+*.tsbuildinfo
+.npm
+.eslintcache
+.stylelintcache
+
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+
+## SASS 
+# ---------------------
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
+
+## track these files, if they exist
+####################################
+!.dockerignore
+!.env.example
+!.git-blame-ignore-revs
+!.gitignore
+!.nvmrc
+!.phpcs.xml.dist
