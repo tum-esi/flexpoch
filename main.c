@@ -213,7 +213,7 @@ int main(int argc, char *argv[]) {
     } else {
         if(is_verbose){ printf("No value for time format provided. Using system time.\n"); }
         get_current_time(&fpc);
-        outfmt = FP;
+        if(outfmt == UNKNOWN){ outfmt = FP; }
     }
 
 
