@@ -102,7 +102,7 @@ int try_parse_unix(char *argstr, int64_t *unixtime){
 int guess_single_arg(char *argstr, TimeFormat *infmt, TimeFormat *outfmt){
     size_t len=strlen(argstr);
     int64_t unixtime;
-    if (len == 18 && strncmp(argstr, "0x", 2) == 0){
+    if (try_parse_fp_hex(argstr, &unixtime) == 0){
         *infmt = FP;
         if(*outfmt == UNKNOWN){ *outfmt = ISO; }
         if(argstr[2] == 'A'){ *outfmt = LOGICAL; }
@@ -186,6 +186,7 @@ int main(int argc, char *argv[]) {
                 break;
             case FP:
                 if(is_verbose){ printf("in-format=Flexpoch\n"); }
+                if (outfmt == UNKNOWN){ outfmt = FP; }
                 int64_t flexpoch = 0;
                 if (try_parse_fp_hex(argv[payload_arg_idx], &flexpoch) == 0) {
                     error = FP_from_fp(flexpoch, &fpc);
