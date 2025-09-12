@@ -9,10 +9,12 @@
 #define ARG_FROM_ISO "--from-iso"
 #define ARG_FROM_FP "--from-fp"
 #define ARG_FROM_UNIX "--from-unix"
+#define ARG_FROM_JAVA "--from-java"
 #define ARG_FROM_LOGICAL "--from-logical"
 #define ARG_TO_ISO "--to-iso"
 #define ARG_TO_FP "--to-fp"
 #define ARG_TO_UNIX "--to-unix"
+#define ARG_TO_JAVA "--to-java"
 #define ARG_JSON "--json"
 #define ARG_VERBOSE "--verbose"
 #define ARG_HELP "--help"
@@ -23,7 +25,8 @@ typedef enum {
     FP  = 0,
     ISO = 1,
     UNIX = 2,
-    LOGICAL = 3,
+    JAVA = 3,
+    LOGICAL = 10,
 } TimeFormat;
 
 void print_version(){
@@ -136,6 +139,8 @@ int main(int argc, char *argv[]) {
             infmt = ISO;
         } else if (strncmp(argv[i], ARG_FROM_UNIX, strlen(ARG_FROM_UNIX)) == 0){
             infmt = UNIX;
+        } else if (strncmp(argv[i], ARG_FROM_JAVA, strlen(ARG_FROM_JAVA)) == 0){
+            infmt = JAVA;
         } else if (strncmp(argv[i], ARG_FROM_LOGICAL, strlen(ARG_FROM_LOGICAL)) == 0){
             infmt = LOGICAL;
         } else if (strncmp(argv[i], ARG_TO_FP, strlen(ARG_TO_FP)) == 0){
@@ -144,6 +149,8 @@ int main(int argc, char *argv[]) {
             outfmt = ISO;
         } else if (strncmp(argv[i], ARG_TO_UNIX, strlen(ARG_TO_UNIX)) == 0){
             outfmt = UNIX;
+        } else if (strncmp(argv[i], ARG_TO_JAVA, strlen(ARG_TO_JAVA)) == 0){
+            outfmt = JAVA;
         } else if (strncmp(argv[i], ARG_JSON, strlen(ARG_JSON)) == 0){
             is_json_out = true;
         } else if (strncmp(argv[i], ARG_VERBOSE, strlen(ARG_VERBOSE)) == 0){
@@ -192,6 +199,16 @@ int main(int argc, char *argv[]) {
                 int64_t unixtime;
                 if (try_parse_unix(argv[payload_arg_idx], &unixtime) == 0) {
                     error = FP_from_unix(unixtime, &fpc);
+                } else {
+                    printf("Unable to parse integer time: %s!", argv[payload_arg_idx]);
+                }
+                break;
+            case JAVA:
+                if(is_verbose){ printf("in-format=JAVA\n"); }
+                if (outfmt == UNKNOWN){ outfmt = FP; }
+                int64_t javatime;
+                if (try_parse_unix(argv[payload_arg_idx], &javatime) == 0) {
+                    error = FP_from_java(javatime, &fpc);
                 } else {
                     printf("Unable to parse integer time: %s!", argv[payload_arg_idx]);
                 }
@@ -254,6 +271,17 @@ int main(int argc, char *argv[]) {
                 printf("\"unix_time\": %li\n", unixtime);
             } else {
                 printf("%li\n", unixtime);
+            }
+            break;
+        case JAVA:
+            if(is_verbose){ printf("out-format=JAVA\n"); }
+            if(error){ break; }
+            int64_t javatime = 0;
+            FP_to_java(&fpc, &javatime);
+            if(is_json_out){
+                printf("\"java_time\": %li\n", javatime);
+            } else {
+                printf("%li\n", javatime);
             }
             break;
         case LOGICAL:

@@ -112,6 +112,8 @@ ErrNo FP_from_iso(char *isostr, FP_Components *out);
 
 ErrNo FP_from_unix(int64_t unixtime, FP_Components *out);
 
+ErrNo FP_from_java(int64_t javatime, FP_Components *out);
+
 ErrNo FP_from_logic(int64_t logictime, FP_Components *out);
 
 
@@ -121,6 +123,8 @@ ErrNo FP_from_logic(int64_t logictime, FP_Components *out);
 ErrNo FP_to_fp(FP_Components *fpc, FP_NumType* out);
 
 ErrNo FP_to_unix(FP_Components *fpc, int64_t* out);
+
+ErrNo FP_to_java(FP_Components *fpc, int64_t* out);
 
 ErrNo FP_to_logic(FP_Components *fpc, int64_t* out);
 

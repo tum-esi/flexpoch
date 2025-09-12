@@ -261,6 +261,19 @@ ErrNo FP_from_unix(int64_t unixtime, FP_Components *out){
     return FP_to_fp(out, &(out->rawdata));
 };
 
+ErrNo FP_from_java(int64_t javatime, FP_Components *out){
+    int64_t unixtime = javatime / 1000;
+    if(unixtime <= (int64_t)CP_ABS_YEAR_NEG<<32 || (int64_t)CP_ABS_YEAR_POS<<32 <= unixtime ){
+        return ERR_OUT_OF_RANGE;
+    }
+    out->seconds = unixtime;
+    out->ns = (javatime % 1000) * 1000 * 1000;
+    out->is_leapsecond = 0;
+    out->precision = PRC_MILLISEC;
+    return FP_to_fp(out, &(out->rawdata));
+}
+
+
 ErrNo FP_from_logic(int64_t logictime, FP_Components *out){
     if(logictime <= (int64_t)-1<<60 || (int64_t)1<<60 < logictime ){
         return ERR_OUT_OF_RANGE;
@@ -322,6 +335,14 @@ ErrNo FP_to_unix(FP_Components *fpc, int64_t* out){
     if (fpc->tz_offset){ return -1; }
     return fpc->precision; // as "error" for precision loss
 }
+
+ErrNo FP_to_java(FP_Components *fpc, int64_t* out){
+    *out = fpc->seconds * 1000 + (fpc->ns / 1000000);
+    if (fpc->is_leapsecond){ return -1; }
+    if (fpc->tz_offset){ return -1; }
+    return fpc->precision; // as "error" for precision loss
+}
+
 
 ErrNo FP_to_logic(FP_Components *fpc, int64_t* out){
     *out = fpc->seconds;
