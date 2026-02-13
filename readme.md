@@ -12,8 +12,8 @@ To cite our work, please use the following BibTex code:
   author       = { Emanuel Regnath and Andreas Finkenzeller and Sebastian Steinhorst },
   title        = { Flexpoch: Feature-rich 64-bit DateTime Encoding },
   pages        = { 1-5 },
-  doi          = {  },
-  month        = {  },
+  doi          = { 10.1109/FDL68117.2025.11165397 },
+  month        = { 9 },
 }
 ```
 
